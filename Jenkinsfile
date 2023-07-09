@@ -8,9 +8,12 @@ pipeline {
       } 
     }
     stage('SonarQube analysis') {
-    withSonarQubeEnv(credentialsId: 'sonarcloud', installationName: 'My SonarQube Server') { // You can override the credential to be used
-      sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.3.*:sonar'
+      steps{
+        withSonarQubeEnv(credentialsId: 'sonarcloud', installationName: 'My SonarQube Server') { // You can override the credential to be used
+          sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.3.*:sonar'
+
+        }
+      }
     }
-  }
   }
 }
