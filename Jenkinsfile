@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage ('Build Artifact - Maven'){
       steps{
-        sh "cd /usr/local/apache-maven-3.9.3 && mvn clean package -DskipTests=true"
+        sh "source /usr/local/apache-maven-3.9.3 && mvn clean package -DskipTests=true"
       //  # archive 'target/*.jar'
       } 
     }
