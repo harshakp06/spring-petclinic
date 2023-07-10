@@ -28,7 +28,7 @@ jobs:
       - name: Build with Maven Wrapper
         run: ./mvnw -B package
       
-      - run: rm pom.xml
+      - run: rm -f pom.xml
         
       - name: SonarCloud Scan
        # run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Pcoverage
