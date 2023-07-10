@@ -1,10 +1,8 @@
 name: Build with maven and scan with Sonarcloud
 
 on:
-  push:
-    branches:
-      - main
-
+   workflow_dispatch 
+   
 env:
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
