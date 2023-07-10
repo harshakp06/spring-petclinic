@@ -1,0 +1,34 @@
+name: Build with maven and scan with Sonarcloud
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Java jdk setup
+      uses: actions/setup-java@v1
+      with:
+        java-version: 12
+
+    - name: maven target # change accordingly
+      run: mvn clean install
+
+    - name: Perform analysis on Sonar Qube
+      uses: sonarsource/sonarcloud-github-action@v1
+      with:
+        sonarcloud.organization: <name of your org>
+        sonarcloud.projectKey: <key>
+        sonarcloud.projectName: <name>
+        sonarcloud.token: ${{ env.SONAR_TOKEN }}
+        sonarcloud.scannerVersion: "4.2.0.1873"
