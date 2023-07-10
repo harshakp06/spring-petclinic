@@ -25,7 +25,7 @@ jobs:
       run: mvn clean install
       
     - name: Perform analysis on Sonar Qube
-      uses: sonarsource/sonarcloud-github-action@v1
+      uses: SonarSource/sonarcloud-github-action@v1.9.1
       with:
         sonarcloud.organization: "harshakp06"
         sonarcloud.projectKey: "harshakp06_spring-petclinic"
