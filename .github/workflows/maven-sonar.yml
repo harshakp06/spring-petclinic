@@ -25,10 +25,15 @@ jobs:
       run: mvn clean install
 
     - name: Perform analysis on Sonar Qube
+      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Pcoverage
+      env:
+          # Needed to get some information about the pull request, if any
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # SonarCloud access token should be generated from https://sonarcloud.io/account/security/
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+     
+    - name: sonarcloud  
       uses: sonarsource/sonarcloud-github-action@v1
       with:
-        sonarcloud.organization: <name of your org>
-        sonarcloud.projectKey: <key>
-        sonarcloud.projectName: <name>
         sonarcloud.token: ${{ env.SONAR_TOKEN }}
-        sonarcloud.scannerVersion: "4.2.0.1873"
+        
