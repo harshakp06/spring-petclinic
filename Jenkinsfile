@@ -9,7 +9,7 @@ pipeline {
     //#}
     stage('SonarQube analysis') {
       steps{
-        withSonarQubeEnv(credentialsId: 'sonarcloud', installationName: 'My SonarQube Server') { // You can override the credential to be used
+        withSonarQubeEnv(credentialsId: 'sonarcloud') { // You can override the credential to be used
           sh "mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -D sonar.projectKey=harshakp06_spring-petclinic,spring.profiles.active=mysql"
 
         }
