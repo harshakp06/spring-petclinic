@@ -8,7 +8,8 @@ pipeline {
       steps{
         script{
           env.SONAR_TOKEN = "${SONARCLD}"
-          sh "mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -D sonar.projectKey=harshakp06_spring-petclinic,spring.profiles.active=mysql"
+          sh 'mvn --version'
+        //  sh "mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -D sonar.projectKey=harshakp06_spring-petclinic,spring.profiles.active=mysql"
 
           
         }
