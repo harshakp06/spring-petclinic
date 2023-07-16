@@ -1,8 +1,8 @@
 pipeline {
   agent any
-  tools {
-    maven 'Maven-3.9.1'
-    jdk 'open-jdk17'
+ // tools {
+   // maven 'Maven-3.9.1'
+    //jdk 'open-jdk17'
   }
 
   environment {
