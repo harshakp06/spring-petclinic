@@ -9,6 +9,10 @@ pipeline {
     //#}
     stage('SonarQube analysis') {
       steps{
+        withSonarQubeEnv('My SonarQube Server', envOnly: true) {
+                                // This expands the evironment variables SONAR_CONFIG_NAME, SONAR_HOST_URL, SONAR_AUTH_TOKEN that can be used by any script.
+                    println ${env.SONAR_HOST_URL} 
+                }
         withSonarQubeEnv(credentialsId: 'sonarcloud') { // You can override the credential to be used
           sh "mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -D sonar.projectKey=harshakp06_spring-petclinic,spring.profiles.active=mysql"
 
