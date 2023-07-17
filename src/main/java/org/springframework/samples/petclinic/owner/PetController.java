@@ -56,13 +56,23 @@ class PetController {
 
 	@ModelAttribute("owner")
 	public Owner findOwner(@PathVariable("ownerId") int ownerId) {
-		return this.owners.findById(ownerId);
+
+		Owner owner = this.owners.findById(ownerId);
+		if (owner == null) {
+			throw new IllegalArgumentException("Owner ID not found: " + ownerId);
+		}
+		return owner;
 	}
 
 	@ModelAttribute("pet")
 	public Pet findPet(@PathVariable("ownerId") int ownerId,
 			@PathVariable(name = "petId", required = false) Integer petId) {
-		return petId == null ? new Pet() : this.owners.findById(ownerId).getPet(petId);
+
+		Owner owner = this.owners.findById(ownerId);
+		if (owner == null) {
+			throw new IllegalArgumentException("Owner ID not found: " + ownerId);
+		}
+		return petId == null ? new Pet() : owner.getPet(petId);
 	}
 
 	@InitBinder("owner")
@@ -113,6 +123,16 @@ class PetController {
 
 	@PostMapping("/pets/{petId}/edit")
 	public String processUpdateForm(@Valid Pet pet, BindingResult result, Owner owner, ModelMap model) {
+
+		String petName = pet.getName();
+
+		// checking if the pet name already exist for the owner
+		if (StringUtils.hasLength(petName)) {
+			Pet existingPet = owner.getPet(petName.toLowerCase(), false);
+			if (existingPet != null && existingPet.getId() != pet.getId()) {
+				result.rejectValue("name", "duplicate", "already exists");
+			}
+		}
 
 		LocalDate currentDate = LocalDate.now();
 		if (pet.getBirthDate() != null && pet.getBirthDate().isAfter(currentDate)) {
